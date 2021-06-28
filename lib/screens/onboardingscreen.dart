@@ -280,15 +280,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
       ),
       bottomSheet: _currentPage == _numPages - 1
-          ? Container(
-              height: 70,
-              width: double.infinity,
-              color: Color(0XFF06003D),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Audeeo()));
-                },
+          ? GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (context) => Audeeo()));
+              },
+              child: Container(
+                height: 70,
+                width: double.infinity,
+                color: Color(0XFF06003D),
                 child: Center(
                   child: Text(
                     'Get Started',

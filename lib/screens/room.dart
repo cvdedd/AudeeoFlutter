@@ -12,36 +12,40 @@ class _RoomState extends State<Room> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Color(0XFF06003D), size: 30, //change your color here
+        ),
         title: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Titus',
-              style: TextStyle(
-                  color: Color(0XFF06003D),
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'You are in this room',
-              style: TextStyle(color: Color(0XFF06003D), fontSize: 15),
-            )
+            // Text(
+            //   'Titus',
+            //   style: TextStyle(
+            //       color: Color(0XFF06003D),
+            //       fontSize: 25.0,
+            //       fontWeight: FontWeight.bold),
+            // ),
+            // Text(
+            //   'You are in this room',
+            //   style: TextStyle(color: Color(0XFF06003D), fontSize: 15),
+            // )
           ],
         ),
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.arrow_back,
-              color: Color(0XFF06003D),
-              size: 30,
-            ),
-          ),
-        ),
+        // leading: Padding(
+        //   padding: const EdgeInsets.only(left: 10),
+        //   child: IconButton(
+        //     onPressed: () {},
+        //     icon: Icon(
+        //       Icons.arrow_back,
+        //       color: Color(0XFF06003D),
+        //       size: 30,
+        //     ),
+        //   ),
+        // ),
+
         centerTitle: true,
-        elevation: 1,
+        elevation: 0,
         backgroundColor: Colors.white,
         actions: [
           Padding(
