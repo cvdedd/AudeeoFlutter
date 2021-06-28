@@ -1,6 +1,7 @@
 import 'package:audeeoflutter/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({Key? key}) : super(key: key);
@@ -11,8 +12,25 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final int _numPages = 3;
-  final PageController _pageController = PageController(initialPage: 0);
+  late PageController _pageController;
   int _currentPage = 0;
+  @override
+  void initState() {
+    _pageController = PageController(initialPage: 0);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  _storeOnBoardInfo() async {
+    int isViewed = 0;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('onBoarding', isViewed);
+  }
 
   List<Widget> _buildPageIndicator() {
     List<Widget> list = [];
@@ -84,10 +102,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   color: Color(0XFF06003D),
                                 ),
                                 onPressed: () {
-                                  _pageController.nextPage(
-                                    duration: Duration(milliseconds: 500),
-                                    curve: Curves.ease,
-                                  );
+                                  _storeOnBoardInfo();
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Audeeo()));
                                 },
                                 child: Text(
                                   'Skip',
@@ -113,7 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ),
                 Container(
-                  height: 600,
+                  height: 550,
                   child: PageView(
                     physics: ClampingScrollPhysics(),
                     controller: _pageController,
@@ -124,8 +143,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     },
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -139,9 +157,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 width: 300,
                               ),
                             ),
-                            SizedBox(
-                              height: 30,
-                            ),
+                            // SizedBox(
+                            //   height: 30,
+                            // ),
                             Center(
                               child: Text(
                                 'Audeeo 1',
@@ -160,7 +178,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               child: Text(
                                 'Lorem ipsum dolor sit amet consec tur adipis Rerum, fugit.Nobis illo nam impedit quisqua udiandae',
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 17,
                                   color: Colors.grey[500],
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
@@ -172,8 +190,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +205,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 30,
+                              height: 20,
                             ),
                             Center(
                               child: Text(
@@ -208,7 +225,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               child: Text(
                                 'Lorem Ipsum dolor sit amet consec tur adipis Rerum, fugit.Nobis illo nam impedit quisqua udiandae',
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 17,
                                   color: Colors.grey[500],
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
@@ -220,8 +237,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -256,7 +272,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               child: Text(
                                 'Lorem Ipsum dolor sit amet consec tur adipis Rerum, fugit.Nobis illo nam impedit quisqua udiandae',
                                 style: TextStyle(
-                                  fontSize: 19,
+                                  fontSize: 17,
                                   color: Colors.grey[500],
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
@@ -281,7 +297,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? GestureDetector(
-              onTap: () {
+              onTap: () async {
+                await _storeOnBoardInfo();
                 Navigator.pushReplacement(
                     context, MaterialPageRoute(builder: (context) => Audeeo()));
               },
